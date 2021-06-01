@@ -7,9 +7,10 @@ const Constraint = Matter.Constraint;
 var ball;
 var roof;
 var rope1;
-function preload()
-{
-	
+var backgroundImg;
+var bg;
+function preload() {
+    getTime();    
 }
 
 function setup() {
@@ -54,8 +55,8 @@ function setup() {
 
 
 function draw() {
-
-  background("white");
+	if(backgroundImg)
+    background(backgroundImg);
  
   
   platform.display();
@@ -83,5 +84,19 @@ function keyPressed() {
   
 	}
 }
+async function getTime(){
+    var response = await fetch("https://worldtimeapi.org/api/timezone/Asia/Kolkata")
+    var responseJson = await response.json();
+    var datetime = responseJson.datetime
+    var hour = datetime.slice(11,13);
 
+    if(hour>=06&&hour<=18){
+    bg = "Clouds bk.png";
+    }
+    else{
+    bg = "cave.png"
+    }
+    backgroundImg = loadImage(bg);
+    
+}
 
